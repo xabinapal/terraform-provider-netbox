@@ -94,7 +94,7 @@ for more information on available lookup expressions.`,
 				Computed: true,
 			},
 			customFieldsKey: customFieldsSchemaRead,
-			tagsKey: tagsSchemaRead,
+			tagsKey:         tagsSchemaRead,
 		},
 	}
 }
