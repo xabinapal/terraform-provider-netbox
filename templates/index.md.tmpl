@@ -7,36 +7,12 @@ description: |-
 
 # Netbox Provider
 
-The Terraform Netbox provider is a plugin for Terraform that allows for the full lifecycle management of [Netbox](https://docs.netbox.dev/en/stable/) resources.
+**⚠️ Important Notice: Do Not Use This Terraform Provider ⚠️**
 
-Use the navigation to the left to read about the available resources.
+This is a **fork** of the [e-breuninger/terraform-provider-netbox](https://github.com/e-breuninger/terraform-provider-netbox) provider. It exists just to merge a few pull requests that are currently open in the original repository.
 
-## Supported Netbox versions
-Netbox often makes breaking API changes even in non-major releases. Check the table below to see which version this provider is compatible with your Netbox version. It is generally recommended to use the provider version matching your Netbox version.
+If you're looking for a stable and maintained provider, you should use the original repository. Once the relevant pull requests are merged upstream, this fork will be **archived**.
 
-| Netbox version  | Provider version |
-| --------------- | ---------------- |
-| v4.0.0 - 4.0.11 | v3.9.0 and up    |
-| v3.7.0 - 3.7.8  | v3.8.0 - 3.8.9   |
-| v3.6.0 - 3.6.9  | v3.7.0 - 3.7.7   |
-| v3.5.1 - 3.5.9  | v3.6.x           |
-| v3.4.3 - 3.4.10 | v3.5.x           |
-| v3.3.0 - 3.4.2  | v3.0.x - 3.5.1   |
-| v3.2.0 - 3.2.9  | v2.0.x           |
-| v3.1.9          | v1.6.0 - 1.6.7   |
-| v3.1.3          | v1.1.x - 1.5.2   |
-| v3.0.9          | v1.0.x           |
-| v2.11.12        | v0.3.x           |
-| v2.10.10        | v0.2.x           |
-| v2.9            | v0.1.x           |
-
-Additionally, since version [1.6.6](https://github.com/e-breuninger/terraform-provider-netbox/commit/0b0b2fffa54d4ab2e5f1677e948b01e56ba211c8), each version of the provider has a built-in list of all Netbox versions it supports at release time. Upon initialization, the provider will probe your Netbox version and include a (non-blocking) warning if the used Netbox version is not supported.
-
-## Configuration
-You must configure the provider with proper credentials before you can use it. You can configure the provider via attributes in the provider block or via environment variables. See [Schema](#schema) for all configuration options
-
-## Example Usage
-
-{{tffile "examples/provider/provider.tf"}}
+Thanks for understanding!
 
 {{ .SchemaMarkdown | trimspace }}
