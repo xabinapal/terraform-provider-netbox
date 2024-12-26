@@ -49,7 +49,7 @@ func dataSourceNetboxPrefix() *schema.Resource {
 				Optional:      true,
 				ValidateFunc:  validation.IsCIDR,
 				ConflictsWith: []string{"cidr"},
-				AtLeastOneOf:  []string{"description", "family", "prefix", "vlan_vid", "vrf_id", "vlan_id", "site_id", "role_id", "cidr", "custom_fields", "tag"},
+				AtLeastOneOf:  []string{"description", "family", "prefix", "vlan_vid", "vrf_id", "vlan_id", "tenant_id", "site_id", "role_id", "cidr", "custom_fields", "tag"},
 			},
 			"vlan_vid": {
 				Type:         schema.TypeFloat,
@@ -61,6 +61,10 @@ func dataSourceNetboxPrefix() *schema.Resource {
 				Optional: true,
 			},
 			"vlan_id": {
+				Type:     schema.TypeInt,
+				Optional: true,
+			},
+			"tenant_id": {
 				Type:     schema.TypeInt,
 				Optional: true,
 			},
@@ -135,6 +139,11 @@ func dataSourceNetboxPrefixRead(d *schema.ResourceData, m interface{}) error {
 		params.VlanVid = &vlanVid
 	}
 
+	if tenantID, ok := d.Get("tenant_id").(int); ok && tenantID != 0 {
+		// Note that tenant_id is a string pointer in the netbox filter, but we use a number in the provider
+		params.TenantID = strToPtr(strconv.Itoa(tenantID))
+	}
+
 	if siteID, ok := d.Get("site_id").(int); ok && siteID != 0 {
 		// Note that site_id is a string pointer in the netbox filter, but we use a number in the provider
 		params.SiteID = strToPtr(strconv.Itoa(siteID))
@@ -184,6 +193,9 @@ func dataSourceNetboxPrefixRead(d *schema.ResourceData, m interface{}) error {
 	if result.Vlan != nil {
 		d.Set("vlan_vid", result.Vlan.Vid)
 		d.Set("vlan_id", result.Vlan.ID)
+	}
+	if result.Tenant != nil {
+		d.Set("tenant_id", result.Tenant.ID)
 	}
 	if result.Site != nil {
 		d.Set("site_id", result.Site.ID)
