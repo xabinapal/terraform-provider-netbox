@@ -88,7 +88,7 @@ for more information on available lookup expressions.`,
 				Type:     schema.TypeString,
 				Computed: true,
 			},
-			customFieldsKey: customFieldsSchemaRead,
+			customFieldsKey: customFieldsSchema,
 			tagsKey:         tagsSchemaRead,
 		},
 	}
