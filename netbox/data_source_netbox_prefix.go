@@ -49,7 +49,7 @@ func dataSourceNetboxPrefix() *schema.Resource {
 				Optional:      true,
 				ValidateFunc:  validation.IsCIDR,
 				ConflictsWith: []string{"cidr"},
-				AtLeastOneOf:  []string{"description", "family", "prefix", "vlan_vid", "vrf_id", "vlan_id", "tenant_id", "site_id", "role_id", "cidr", "custom_fields", "tag"},
+				AtLeastOneOf:  []string{"description", "family", "prefix", "vlan_vid", "vrf_id", "vlan_id", "tenant_id", "site_id", "role_id", "cidr", "custom_fields", "tag", "status"},
 			},
 			"vlan_vid": {
 				Type:         schema.TypeFloat,
@@ -86,7 +86,7 @@ for more information on available lookup expressions.`,
 			},
 			"status": {
 				Type:     schema.TypeString,
-				Computed: true,
+				Optional: true,
 			},
 			customFieldsKey: customFieldsSchema,
 			tagsKey:         tagsSchemaRead,
@@ -154,6 +154,10 @@ func dataSourceNetboxPrefixRead(d *schema.ResourceData, m interface{}) error {
 	}
 	if tagn, ok := d.Get("tag__n").(string); ok && tagn != "" {
 		params.Tagn = &tagn
+	}
+
+	if status, ok := d.Get("status").(string); ok && status != "" {
+		params.Status = &status
 	}
 
 	if cfm, ok := d.Get(customFieldsKey).(map[string]interface{}); ok {
